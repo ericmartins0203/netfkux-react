@@ -1,25 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Login from "./screens/login/login";
+import { ThemeProvider } from "styled-components";
+import { Theme } from "./themes/main/theme";
+import { GlobalStyles } from "./themes/main/global-style";
+import { Route, Routes } from "react-router-dom";
+
+import { LOGIN_URL } from "./screens/login/login.type";
+import { MOVIES_LIST_URL } from "./screens/movies-list/movies.type";
+import MoviesList from "./screens/movies-list/movies-list";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyles />
+      <ThemeProvider theme={Theme}>
+        <Routes>
+          <Route element={<Login />} path={LOGIN_URL} />
+          <Route element={<MoviesList />} path={MOVIES_LIST_URL} />
+        </Routes>
+      </ThemeProvider>
+    </>
   );
 }
 
