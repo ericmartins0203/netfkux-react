@@ -1,11 +1,14 @@
 import * as yup from "yup";
 import { Grid } from "@mui/material";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Wrapper } from "./login.styled";
 import Input from "../../components/input/input";
 import Button from "../../components/button/button";
 import Error from "../../components/errorMessage/error";
+import { authenticated } from "../../store/user/user.selector";
+import userSlice from "../../store/user/user.slice";
 
 export default function Login() {
   const [data, setData] = useState({
@@ -14,6 +17,10 @@ export default function Login() {
   });
 
   const [error, setError] = useState("");
+
+  const dispatch = useDispatch();
+
+  const userAuthenticated = useSelector(authenticated);
 
   const handleChange = useCallback(
     (event: any) => {
@@ -35,7 +42,10 @@ export default function Login() {
         });
 
         await schema.validate(data);
+
         setError("");
+
+        dispatch(userSlice.actions.authenticated(true));
       } catch (e: any) {
         console.log(e.errors[0]);
         setError(e.errors[0]);
@@ -43,6 +53,10 @@ export default function Login() {
     },
     [data]
   );
+
+  useEffect(() => {
+    console.log(userAuthenticated);
+  }, [userAuthenticated]);
 
   return (
     <Wrapper container justifyContent="center" alignContent="center">
