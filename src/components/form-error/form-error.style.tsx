@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-export const ErrorStyled = styled.p`
+export const Error = styled.p`
   color: ${(props) => props.theme.palette.core.primary};
   font-weight: bold;
   text-align: center;

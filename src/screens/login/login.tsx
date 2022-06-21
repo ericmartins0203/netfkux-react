@@ -1,40 +1,42 @@
-import * as yup from "yup";
-import { Grid } from "@mui/material";
-import { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, {
+  ChangeEvent, useCallback, useEffect, useState,
+} from 'react';
+import * as yup from 'yup';
+import { Grid } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Wrapper } from "./login.styled";
-import Input from "../../components/input/input";
-import Button from "../../components/button/button";
-import Error from "../../components/errorMessage/error";
-import { authenticated } from "../../store/user/user.selector";
-import userSlice from "../../store/user/user.slice";
+import { authenticated } from 'store/user/user.selector';
+import userSlice from 'store/user/user.slice';
+import Input from 'components/input/input';
+import Button from 'components/button/button';
+import { Error } from 'types/yup';
+import FormError from 'components/form-error/form-error';
+import { Wrapper } from './login.styled';
 
 export default function Login() {
   const [data, setData] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const dispatch = useDispatch();
 
   const userAuthenticated = useSelector(authenticated);
 
   const handleChange = useCallback(
-    (event: any) => {
-      const { target } = event;
+    ({ target }: ChangeEvent<HTMLInputElement>) => {
       setData((prevData) => ({
         ...prevData,
         [target.name]: target.value,
       }));
     },
-    [setData]
+    [setData],
   );
 
   const handleSend = useCallback(
-    async (event: any) => {
+    async () => {
       try {
         const schema = yup.object().shape({
           email: yup.string().email().required(),
@@ -43,15 +45,15 @@ export default function Login() {
 
         await schema.validate(data);
 
-        setError("");
+        setError('');
 
-        dispatch(userSlice.actions.authenticated(true));
-      } catch (e: any) {
-        console.log(e.errors[0]);
-        setError(e.errors[0]);
+        dispatch(userSlice.actions.setData({
+        }));
+      } catch (YupError: unknown) {
+        setError((YupError as Error).errors[0]);
       }
     },
-    [data]
+    [data],
   );
 
   useEffect(() => {
@@ -73,7 +75,7 @@ export default function Login() {
           placeholder="Senha"
           onChange={handleChange}
         />
-        {error ? <Error>{error}</Error> : null}
+        {error ? <FormError message={error} /> : null}
         <Button onClick={handleSend}>Entrar</Button>
       </Grid>
     </Wrapper>

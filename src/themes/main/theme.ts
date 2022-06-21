@@ -1,4 +1,4 @@
-import {palette} from "./pallete";
+import { palette } from './pallete';
 
 export const Theme = {
   palette,
