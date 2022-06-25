@@ -1,19 +1,22 @@
 import React, {
   ChangeEvent, useCallback, useEffect, useState,
 } from 'react';
-import * as yup from 'yup';
 import { Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 
-import { authenticated } from 'store/user/user.selector';
+import { tokenSelector } from 'store/user/user.selector';
 import userSlice from 'store/user/user.slice';
 import Input from 'components/input/input';
 import Button from 'components/button/button';
-import { Error } from 'types/yup';
+import { Error } from 'types/yup.type';
 import FormError from 'components/form-error/form-error';
-import { Wrapper } from './login.styled';
+import { USER_TOKEN_COOKIE } from 'store/user/user.type';
+import { SHOWS_URL } from 'screens/shows/shows.type';
+import { CreateAccount, Wrapper } from './login.styled';
+import { loginSchema } from './login.schema';
 
-export default function Login() {
+export default function Form() {
   const [data, setData] = useState({
     email: '',
     password: '',
@@ -22,11 +25,14 @@ export default function Login() {
   const [error, setError] = useState('');
 
   const dispatch = useDispatch();
-
-  const userAuthenticated = useSelector(authenticated);
+  const navigate = useNavigate();
+  const from = useLocation();
+  const token = useSelector(tokenSelector);
+  // const userError = useSelector
 
   const handleChange = useCallback(
     ({ target }: ChangeEvent<HTMLInputElement>) => {
+      setError('');
       setData((prevData) => ({
         ...prevData,
         [target.name]: target.value,
@@ -38,17 +44,9 @@ export default function Login() {
   const handleSend = useCallback(
     async () => {
       try {
-        const schema = yup.object().shape({
-          email: yup.string().email().required(),
-          password: yup.string().required(),
-        });
+        await loginSchema.validate(data);
 
-        await schema.validate(data);
-
-        setError('');
-
-        dispatch(userSlice.actions.setData({
-        }));
+        dispatch(userSlice.actions.authentication(data));
       } catch (YupError: unknown) {
         setError((YupError as Error).errors[0]);
       }
@@ -57,12 +55,25 @@ export default function Login() {
   );
 
   useEffect(() => {
-    console.log(userAuthenticated);
-  }, [userAuthenticated]);
+    if (token) {
+      navigate(SHOWS_URL, {
+        state: { from },
+      });
+    }
+  }, [token]);
+
+  useEffect(() => {
+    const localToken = localStorage.getItem(USER_TOKEN_COOKIE);
+
+    if (localToken) {
+      dispatch(userSlice.actions.setData({ token: localToken }));
+    }
+  }, []);
 
   return (
     <Wrapper container justifyContent="center" alignContent="center">
       <Grid item xs={2}>
+        <h1 style={{ color: 'red', textAlign: 'center' }}>NETFLIX</h1>
         <Input
           type="email"
           name="email"
@@ -75,8 +86,11 @@ export default function Login() {
           placeholder="Senha"
           onChange={handleChange}
         />
-        {error ? <FormError message={error} /> : null}
         <Button onClick={handleSend}>Entrar</Button>
+        {error ? <FormError message={error} /> : null}
+        <Link to="/signup">
+          <CreateAccount>Criar uma conta</CreateAccount>
+        </Link>
       </Grid>
     </Wrapper>
   );
