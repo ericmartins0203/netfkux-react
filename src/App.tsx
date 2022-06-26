@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { Theme } from 'themes/main/theme';
 import { GlobalStyles } from 'themes/main/global-style';
 import { LOGIN_URL } from 'screens/login/login.type';
-import Login from 'screens/login/login';
+import Login from 'screens/login/login.screen';
 import store from 'store/store/store';
 import Guard from 'components/guard/guard';
 import { SHOWS_URL } from 'screens/shows/shows.type';

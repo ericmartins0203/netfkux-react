@@ -4,6 +4,7 @@ import userService from 'services/user/user.service';
 import {
   AuthErrorMessage, AuthPayload, AuthResponse, SignUpPayload,
 } from 'services/user/user.type';
+import showsSlice from 'store/shows/shows.slice';
 
 import userSlice, { initialState } from 'store/user/user.slice';
 
@@ -32,7 +33,15 @@ function* createUser(action: PayloadAction<SignUpPayload>) {
   }
 }
 
+function* logoff(_action: PayloadAction<undefined>) {
+  yield put(showsSlice.actions.setSettings({ loading: true }));
+
+  yield showsSlice.actions.setList({});
+  yield userSlice.actions.setData({ token: '' });
+}
+
 export const userSaga = [
   takeLatest('user/authentication', authentication),
   takeLatest('user/creationUser', createUser),
+  takeLatest('user/logoff', logoff),
 ];

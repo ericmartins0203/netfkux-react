@@ -13,6 +13,7 @@ import { Error } from 'types/yup.type';
 import FormError from 'components/form-error/form-error';
 import { USER_TOKEN_COOKIE } from 'store/user/user.type';
 import { SHOWS_URL } from 'screens/shows/shows.type';
+import Header from 'components/header/header';
 import { CreateAccount, Wrapper } from './login.styled';
 import { loginSchema } from './login.schema';
 
@@ -73,7 +74,7 @@ export default function Form() {
   return (
     <Wrapper container justifyContent="center" alignContent="center">
       <Grid item xs={2}>
-        <h1 style={{ color: 'red', textAlign: 'center' }}>NETFLIX</h1>
+        <Header />
         <Input
           type="email"
           name="email"

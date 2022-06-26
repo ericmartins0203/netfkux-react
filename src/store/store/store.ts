@@ -3,8 +3,8 @@ import createSagaMiddleware from '@redux-saga/core';
 import { all } from 'redux-saga/effects';
 
 import { userSaga } from 'store/user/user.saga';
-import { showsSaga } from 'store/show/shows.saga';
-import showsSlice from 'store/show/shows.slice';
+import { showsSaga } from 'store/shows/shows.saga';
+import { showsReducer } from 'store/shows/shows.slice';
 import userSlice from '../user/user.slice';
 
 const saga = createSagaMiddleware();
@@ -12,7 +12,7 @@ const saga = createSagaMiddleware();
 const store = configureStore({
   reducer: {
     user: userSlice.reducer,
-    show: showsSlice.reducer,
+    shows: showsReducer,
   },
   middleware: [saga],
 });
