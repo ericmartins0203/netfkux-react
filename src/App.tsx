@@ -11,6 +11,8 @@ import store from 'store/store/store';
 import Guard from 'components/guard/guard';
 import { SHOWS_URL } from 'screens/shows/shows.type';
 import Shows from 'screens/shows/shows';
+import Show from 'screens/show/show';
+import { SHOW_URL } from 'screens/show/show.type';
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
         <Routes>
           <Route element={<Login />} path={LOGIN_URL} />
           <Route element={<Guard><Shows /></Guard>} path={SHOWS_URL} />
+          <Route element={<Guard><Show /></Guard>} path={SHOW_URL} />
         </Routes>
       </ThemeProvider>
     </Provider>

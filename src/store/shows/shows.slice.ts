@@ -6,6 +6,7 @@ export const initialState: Shows = {
   data: {
     myList: [],
     list: {},
+    showDetail: null,
   },
   settings: {
     loading: false,

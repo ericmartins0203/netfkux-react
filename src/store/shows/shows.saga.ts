@@ -52,6 +52,7 @@ function* getMyList() {
   }
 
   try {
+    // @ts-ignore
     const response: AxiosResponse<Show[]> = yield call(
       showsService({ token }).getMyList,
     );
@@ -65,7 +66,7 @@ function* getMyList() {
   }
 }
 
-// function* showDetail(action) {
+// function* getShowDetail(id: number) {
 //   yield put(showSlice.actions.setSettings({ loading: true }));
 
 //   const token: Data['token'] = yield select(tokenSelector);
@@ -77,8 +78,8 @@ function* getMyList() {
 
 //   try {
 //     const response: AxiosResponse<Show> = yield call(
-//       showsService({ token }).showDetail,
-//       action.payload,
+//       showsService({ token }).getShowDetail,
+//       id.toString(),
 //     );
 
 //     yield put(showSlice.actions.setShowDetail(response.data));
@@ -93,4 +94,5 @@ function* getMyList() {
 export const showsSaga = [
   takeLatest('shows/getList', getList),
   takeLatest('shows/getMyList', getMyList),
+  // takeLatest('shows/getShowDetail', getShowDetail),
 ];

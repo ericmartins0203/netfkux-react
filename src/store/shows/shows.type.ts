@@ -2,7 +2,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 
 export enum ShowCategory {
   MOVIE = 'MOVIE',
-  TV_SHOWS = 'TV_SHOWS',
+  SERIES = 'SERIES',
 }
 
 export type Episode = {
@@ -31,6 +31,7 @@ export type List = {
 export type Data = {
   myList: Show[]
   list: List
+  showDetail: Show | null
 };
 
 export type Settings = {
@@ -48,6 +49,8 @@ export type Shows = {
 export type BaseReducer<Payload> = (state: Shows, action: PayloadAction<Payload>) => void;
 
 export type GetList = BaseReducer<undefined>;
+export type GetShowDetail = BaseReducer<Show['id']>;
+export type SetShowDetail = BaseReducer<Show>;
 export type SetList = BaseReducer<List>;
 export type SetMyList = BaseReducer<Data['myList']>;
 export type SetSettings = BaseReducer<Settings>;

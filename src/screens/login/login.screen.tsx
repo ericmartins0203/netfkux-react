@@ -73,8 +73,8 @@ export default function Form() {
 
   return (
     <Wrapper container justifyContent="center" alignContent="center">
+      <Header />
       <Grid item xs={2}>
-        <Header />
         <Input
           type="email"
           name="email"

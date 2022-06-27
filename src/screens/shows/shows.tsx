@@ -14,7 +14,7 @@ export default function Shows() {
   const list = useSelector(listSelector);
   const myList = useSelector(myListSelector);
   const movies = list.MOVIE;
-  const tvShows = list.TV_SHOWS;
+  const tvShows = list.SERIES;
 
   useEffect(() => {
     dispatch(showsActions.getList());
@@ -34,7 +34,7 @@ export default function Shows() {
       <Container>
         <ShowsList
           autoplay
-          width="95%"
+          width="100%"
           height="560px"
           arrows={false}
           shows={myList}

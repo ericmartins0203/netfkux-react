@@ -14,9 +14,9 @@ export const showsService = ({ token }: Props) => {
 
   const getMyList = () => axiosInstance.get('/list', config);
 
-  const showDetail = (showId: string) => axiosInstance.get(`/shows/${showId}`, config);
+  const getShowDetail = (id: string) => axiosInstance.get(`/shows/${id}`, config);
 
-  return { getList, getMyList, showDetail };
+  return { getList, getMyList, getShowDetail };
 };
 
 export default showsService;
