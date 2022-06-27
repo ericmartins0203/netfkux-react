@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from '../../assets/logo.svg';
 import avatar from '../../assets/avatar.png';
-import { Logo, SideBar } from './header.styled';
+import { Logo } from './header.styled';
 
 export default function Header() {
   const [open, setOpen] = React.useState(false);
@@ -12,19 +12,20 @@ export default function Header() {
 
   return (
     <Logo>
-      <button type="button" onClick={() => handleClick()}>
-        { !open ? (
+
+      { !open ? (
+        <button type="button" onClick={() => handleClick()}>
           <span className="material-symbols-outlined">
             menu
           </span>
-        ) : (
-          <SideBar>
-            <span className="material-symbols-outlined">logout</span>
-            <span>Sair da conta</span>
-          </SideBar>
-        )}
+        </button>
+      ) : (
+        <button type="button" onClick={() => handleClick()}>
+          <span className="material-symbols-outlined">logout</span>
+          <span className="close">Sair da conta</span>
+        </button>
+      )}
 
-      </button>
       <img src={logo} alt="logo netflix" />
       <img className="avatar" src={avatar} alt="logo netflix" />
     </Logo>

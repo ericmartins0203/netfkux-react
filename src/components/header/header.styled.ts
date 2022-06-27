@@ -14,12 +14,7 @@ export const Logo = styled.div`
     height: 80%; 
   }
 
-  span{
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #fff;
-    cursor: pointer
-  }
+  
 
   button{
     border: none;
@@ -31,18 +26,22 @@ export const Logo = styled.div`
     height: 70px;
     border-radius: 50%;
   }
-`;
 
-export const SideBar = styled.div`
-  width: 20vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
+  button{
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-  span{
-    font-size: 1rem;
+    span{
+    font-size: 2.5rem;
+    font-weight: bold;
     color: #fff;
+    cursor: pointer
+    }
+  }
+
+  .close{
+    font-size: 1.5rem;
   }
 `;
